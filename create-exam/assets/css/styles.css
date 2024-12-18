@@ -1,0 +1,239 @@
+:root {
+    --ye: #6495ed;
+    --wh: #faf0e6;
+    --secondColor:#d8ce97;
+    /* --primaryColor: #0d081f; */
+    --primaryColor:#162a2c;
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+    color: var(--primaryColor);
+
+}
+body {
+    background-color: #fefcf6;
+
+  }
+
+.card{
+    width: 60%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f4efe6;
+    box-shadow: 0 4px 8px rgba(78, 75, 105, 0.1);
+    &:hover {
+        box-shadow: 2px 6px 10px rgba(0, 0, 0, 0.249);
+        transform: scale(0.5px);
+   }
+}  
+
+
+h1,h3 {
+    font-family: 'Roboto', sans-serif;
+    color: var(--primaryColor);
+}
+
+h1 {
+    text-align: center;
+    font-size: 30px;
+}
+
+
+/* Textarea for the question */
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.choices-View{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    background-color: white;
+    box-shadow: 2px 3px 2px rgba(78, 75, 105, 0.1);
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+.choices-View label {
+    flex-grow: 1; /* Allow the label to take as much space as needed */
+    margin-right: 10px; /* Add some spacing between the label and the icon */
+}
+
+.choices-View i {
+    font-size: 18px;    /* Adjust the size of the icon if needed */
+    /* margin-right: 15px; */
+    color: white;
+}
+
+/* Wrapper for the choice input and button */
+.choice-wrapper {
+    display: flex;
+    align-items: baseline; /* Vertically align the items */
+    width: 100%;
+    gap: 10px;
+}
+
+input[type="text"],
+input[type="number"]
+{
+    border: 1px solid rgb(198, 198, 198);
+    border-radius: 4px;
+    display: block;
+    width: 95%;
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    outline: none;
+    &:focus {
+        border: 2px solid var(--primaryColor);
+    }
+}
+
+.exam-date{
+    display: flex;
+}
+input[type="date"],
+input[type="time"]{
+    border: 1px solid rgb(198, 198, 198);
+    border-radius: 4px;
+    display: inline-block;
+    width: 45%;
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    outline: none;
+    &:focus {
+        border: 2px solid var(--primaryColor);
+    }
+}
+input[type="date"]{
+    margin-right: 10px;
+}
+/* input[type="radio"], */
+input[type="checkbox"] {
+  margin: 0 4px 8px 0;
+}
+
+.choice-wrapper>input{
+    width: 270%;
+}
+/* Buttons */
+button {
+    border: none;
+    border-radius: 4px;
+    background-color:  var(--primaryColor);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 40px; 
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+
+}
+#saveQuestionDetails{
+    background-color:var(--primaryColor);
+    &:hover {
+        color: var(--secondColor);
+    }
+}
+.new-button{
+    display: block;
+    width: 100%;
+}
+
+#EditExamDetails{
+    display: inline;
+}
+
+
+.btn{
+    width: fit-content;
+    margin: 0px;
+    margin-right: 10px;
+    margin-left: 10px;
+    height: 100%;
+}
+
+
+
+
+
+#questionCreateContainer {
+    position: relative; 
+}
+
+#questionCreateContainer div[style*="cursor: pointer;"] {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--primaryColor);
+}
+
+#questionCreateContainer div[style*="cursor: pointer;"]:hover {
+    color: red; 
+}
+
+
+/* The overlay that darkens the background */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; 
+    z-index: 999; 
+  }
+  
+  .popup {
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: center;
+    border-radius: 8px;
+    width: 400px;
+  }
+  
+  /* Disable scrolling when the popup is active */
+  body.no-scroll {
+    overflow: hidden;
+  }
+  
+
+  .popup i{
+    margin-top: -50px;
+    border-radius: 50%;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
+    background-color:  var(--primaryColor);
+    color: #ffffff;
+    font-size: 50px;
+    padding: 30px;
+}
+

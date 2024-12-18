@@ -1,0 +1,149 @@
+label {
+    font-size: 16px;
+    color: #333333;
+}
+#open {
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.prof {
+    top: 2px;
+    left: 0px;
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+
+}
+
+.prof-content {
+    background-color: #f4efe6;
+    margin: 3% auto;
+    padding: 40px;
+    border-radius: 8px;
+    width: 40%;
+    position: relative;
+}
+
+.photo-edit {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+#profilePhoto {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    
+    object-fit: cover;
+    border: 2px solid #ccc;
+    text-align: center;
+
+}
+
+.edit-photo-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #162a2c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.edit-photo-icon:hover {
+    background-color: #f4efe6;
+    color: #162a2c;
+}
+
+#photoUpload {
+    display: none;
+}
+
+.label {
+    font-weight: bold;
+}
+
+#nameInput,
+#mailInput,
+#roleInput,
+#passwordInput {
+    display: block;
+    background-color: #fefcf6;
+    margin: 5px -5px 15px;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px;
+    border-radius: 4px;
+}
+
+.prof-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+#cancelButton
+{
+    background: #fefcf6;
+    color: #162a2c;
+
+    
+}
+#cancelButton:hover
+{
+    background: #162a2c;
+    color: #f4efe6;
+
+    
+}
+
+
+
+
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 18px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+
+}
+
+.close:hover {
+    background-color: #162a2c;
+}
+
+#editt {
+    margin-left: 95%;
+}
+
+.edit-icon {
+    position: absolute;
+    right: 10px;
+    top: 60%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: rgb(1, 50, 80);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.edit-icon:hover {
+    color: black;
+}

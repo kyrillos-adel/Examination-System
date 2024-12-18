@@ -1,0 +1,256 @@
+<!-- <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvQfe9K23j4ykyHbIsuq3AfRpjvyB0JME",
+      authDomain: "examination-website.firebaseapp.com",
+      projectId: "examination-website",
+      storageBucket: "examination-website.firebasestorage.app",
+      messagingSenderId: "826341893816",
+      appId: "1:826341893816:web:af17fca7c522cc8706f64d",
+      measurementId: "G-MLENT2079Q"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script> -->
+
+
+
+<html>
+<head>
+</head>
+<body>
+    <form id="examDetailsForm">
+        <input type="text" id="examName" name="examName" placeholder="Exam Name" />
+        <p>Exam Date:</p>
+        <div class="exam-date">
+          <input type="date" id="examDate" name="examDate" placeholder="Exam Date" />
+          <input type="time" id="examTime" name="examTime" placeholder="Exam Time" />
+        </div>
+        <button type="button" id="saveQuestionDetails" onclick="SaveData()">Save</button>
+        <button type="button" id="getdata" onclick="getData()">get</button>
+      </form>
+      <div id="examDetails">
+        <h3>Exam Details:</h3>
+        <ul id="examList"></ul>
+    </div>
+
+    <table id="examTable">
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Choices</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic rows will be added here -->
+        </tbody>
+      </table>
+
+
+      <script>
+        function SaveData(){
+            var examName = document.getElementById("examName").value
+            var examDate = document.getElementById("examDate").value
+            var examTime = document.getElementById("examTime").value
+
+            var obj={
+                ExamName:examName,
+                ExamDate:examDate,
+                ExamTime:examTime
+            }
+
+            console.log(obj)
+
+            var xhr= new XMLHttpRequest()
+            xhr.open("POST", "https://examination-website-default-rtdb.firebaseio.com/Exam.json")
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.send(JSON.stringify(obj))
+            xhr.addEventListener("readystatechange",()=>{
+                if(xhr.readyState==4 && xhr.status == 200){
+                    console.log(xhr.responseText)
+                }
+            })
+        }
+
+        function getData() {
+            var searchName = prompt();    // Get the search input
+            if (!searchName) {
+                alert("Please enter an exam name to search.");
+                return;
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://examination-website-default-rtdb.firebaseio.com/Exam.json", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send();
+            xhr.addEventListener("readystatechange", () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response)
+                    var examList = document.getElementById("examList");
+                    examList.innerHTML = '';  
+
+                    var found = false;
+
+                    for (var key in response) {
+                        if (response.hasOwnProperty(key)) {
+                            var exam = response[key];
+                            if (exam.ExamName.toLowerCase() === searchName.toLowerCase()) {
+                                found = true;
+                                // Concatenate the date and time into a single string
+                                const dateTimeString = `${exam.ExamDate}T${exam.ExamTime}:00`; // Adding seconds to the time
+
+                                // Create a Date object
+                                const examDateObj = new Date(dateTimeString);
+                                // let DataExam = new Date(exam.ExamDate)
+                                // console.log(examDateObj);
+                                // Get the current date and time
+                                const currentDateObj = new Date();
+
+                                // Compare the dates
+                                if (examDateObj > currentDateObj) {
+                                    console.log("The exam is in the future.");
+                                    var listItem = document.createElement("li");
+                                    listItem.textContent = `Exam Name: ${exam.ExamName}, Date: ${exam.ExamDate}, Time: ${exam.ExamTime}`;
+                                    examList.appendChild(listItem);
+                                } else if (examDateObj < currentDateObj) {
+                                    console.log("The exam is in the past.");
+                                    
+                                } else {
+                                    console.log("The exam is happening now.");
+                                }
+                                
+                                var listItem = document.createElement("li");
+                                listItem.textContent = `Exam Name: ${exam.ExamName}, Date: ${exam.ExamDate}, Time: ${exam.ExamTime}`;
+                                examList.appendChild(listItem);
+                            }
+                        }
+                    }
+
+                    if (!found) {
+                        examList.innerHTML = '<li>No exam found with that name.</li>';
+                    }
+                }
+            });
+        }
+
+
+        function getAllData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://examination-website-default-rtdb.firebaseio.com/Exam.json", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send();
+            xhr.addEventListener("readystatechange", () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response)
+                    var examList = document.getElementById("examList");
+                    examList.innerHTML = '';  
+
+                    var found = false;
+
+                    for (var key in response) {
+                        if (response.hasOwnProperty(key)) {
+                            var exam = response[key];
+                            if (exam.ExamName.toLowerCase() === searchName.toLowerCase()) {
+                                found = true;
+                                var listItem = document.createElement("li");
+                                listItem.textContent = `Exam Name: ${exam.ExamName}, Date: ${exam.ExamDate}, Time: ${exam.ExamTime}`;
+                                examList.appendChild(listItem);
+                            }
+                        }
+                    }
+
+                    if (!found) {
+                        examList.innerHTML = '<li>No exam found with that name.</li>';
+                    }
+                }
+            });
+        }
+
+
+
+function displayExamData(examData) {
+  // Get the table body where rows will be inserted
+  const tableBody = document.querySelector("#examTable tbody");
+
+  // Clear any existing rows in the table
+  tableBody.innerHTML = "";
+
+  // Loop through each question in the exam
+  examData.questions.forEach(question => {
+    // Create a new row for each question
+    const row = document.createElement("tr");
+
+    // Create the question cell
+    const questionCell = document.createElement("td");
+    questionCell.textContent = question.QuestionContent;
+    row.appendChild(questionCell);
+
+    // Create the choices cell
+    const choicesCell = document.createElement("td");
+
+    // Create a list to display the choices
+    const choicesList = document.createElement("ul");
+
+    question.choices.forEach(choice => {
+      // Create a list item for each choice
+      const choiceItem = document.createElement("li");
+      choiceItem.textContent = `${choice.content} ${choice.isCorrect ? "(Correct)" : ""}`;
+      choicesList.appendChild(choiceItem);
+    });
+
+    // Append the choices list to the choices cell
+    choicesCell.appendChild(choicesList);
+    row.appendChild(choicesCell);
+
+    // Append the row to the table body
+    tableBody.appendChild(row);
+  });
+}
+
+// Sample exam data (as per your provided structure)
+const examData = {
+  ExamID: "1",
+  ExamName: "Math Exam",
+  ExamDate: "2024-12-16",
+  ExamTime: "10:00 AM",
+  ExamDuration: "120",
+  questions: [
+    {
+      QuestionID: -1,
+      QuestionContent: "What is 2+2?",
+      choices: [
+        { content: "3", isCorrect: false },
+        { content: "4", isCorrect: true },
+        { content: "5", isCorrect: false }
+      ]
+    },
+    {
+      QuestionID: -2,
+      QuestionContent: "What is 5+5?",
+      choices: [
+        { content: "8", isCorrect: false },
+        { content: "10", isCorrect: true },
+        { content: "12", isCorrect: false }
+      ]
+    }
+  ]
+};
+
+// Display the data in the table
+displayExamData(examData);
+
+      </script>
+
+</body>
+</html>

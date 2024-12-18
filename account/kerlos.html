@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="profileCSS.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        thank you
+    </div>
+<br>
+    <button id="open" onclick="method()">
+
+    </button>
+
+    <div id="profile" class="prof">
+        <div class="prof-content">
+            <span class="close">x</span>
+            <div class="prof-body">
+                <center>
+                    <div class="photo-edit">
+                        <img id="profilePhoto" src="" alt="Profile Photo" />
+                        <label for="photoUpload" class="edit-photo-icon">&#9998; Edit</label>
+                        <input type="file" id="photoUpload" accept="image/*" />
+                    </div>
+                </center>
+                <div>
+
+                    <div style="position: relative; width: 100%;">
+                        <label class="label" for="nameInput">Name</label>
+                        <input type="text" id="nameInput" value="Rawan Ragab" style="padding-right: 35px;" />
+                        <i class="fa fa-edit edit-icon" title="Edit"></i>
+                    </div>
+                    <div style="position: relative; width: 100%;">
+                        <label class="label" for="mailInput">Mail</label>
+                        <input style="padding-right: 35px;" type="text" id="mailInput" value="rawan@gmail.com" />
+                    </div>
+                    <div style="position: relative; width: 100%;">
+                        <label class="label" for="roleInput">Role</label>
+                        <input style="padding-right: 35px;" type="text" id="roleInput" value="Student" disabled />
+                    </div>
+
+                    <div style="position: relative; width: 100%;">
+                        <label class="label" for="roleInput">Password</label>
+                        <input style="padding-right: 35px;" type="password" id="passwordInput" value="A12345"/>
+                        <i class="fa fa-edit edit-icon" title="Edit"></i>
+                    </div>
+
+                </div>
+            </div>
+            <div class="prof-footer">
+                <button id="saveButton" class="btn save">Save</button>
+                <button id="cancelButton" class="btn cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+const prof = document.getElementById('profile');
+const openprofile = document.getElementById('open');
+const closeprof = document.querySelector('.close');
+const saveButton = document.getElementById('saveButton');
+const cancelButton = document.getElementById('cancelButton');
+const nameInput = document.getElementById('nameInput');
+const passwordInput = document.getElementById('passwordInput');
+const roleInput = document.getElementById('roleInput');
+const mailInput = document.getElementById('mailInput');
+const profilePhoto = document.getElementById('profilePhoto');
+const photoUpload = document.getElementById('photoUpload');
+const firebaseURL = "https://loginandregister-9116b-default-rtdb.firebaseio.com/users.json"; 
+
+async function fetchUserData() {
+    try {
+        const response = await fetch(firebaseURL);
+        if (!response.ok) throw new Error("Error fetching user data!");
+
+        const userData = await response.json();
+        var user;
+        // Assuming you're fetching the first user's data for simplicity
+        const userKeys = Object.keys(userData);
+        for (const key in userData) {
+            if (userData.hasOwnProperty(key)) {
+                const element = userData[key];
+                console.log(element)
+                var savedEmail = localStorage.getItem('userEmail');
+                if(element.email == savedEmail){
+                    user = element;
+                    break; 
+                }
+                
+            }
+        }
+        
+
+        // Populate the profile fields
+        nameInput.value = user.username || "Unknown";
+        passwordInput.value = user.password || "";
+        roleInput.value = user.role || "Not defined";
+        mailInput.value = user.email || "";
+
+        console.log("User Data Loaded:", user);
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("Failed to fetch user data.");
+    }
+}
+
+function validateInput(input, regex) {
+    if (!regex.test(input.value)) {
+        input.style.border = "2px solid red";
+        return false;
+    } else {
+        input.style.border = "2px solid green";
+        return true;
+    }
+}
+
+function checkFormValidity() {
+    const RGXname = /^[a-zA-Z\s]{3,30}$/;
+    const RGXpass = /^(?=.*[A-Z][0-9]{4,8}).+$/;
+
+    const isNameValid = validateInput(nameInput, RGXname);
+    const isPasswordValid = validateInput(passwordInput, RGXpass);
+    saveButton.disabled = !(isNameValid && isPasswordValid);
+}
+
+// Show Profile Modal
+openprofile.onclick = function () {
+    prof.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+};
+
+closeprof.onclick = function () {
+    prof.style.display = 'none';
+    document.body.style.overflow = 'auto';
+};
+
+cancelButton.onclick = function () {
+    prof.style.display = 'none';
+    document.body.style.overflow = 'auto';
+};
+
+window.onclick = function (event) {
+    if (event.target === prof) {
+        prof.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+};
+
+// Photo Upload Handler
+photoUpload.onchange = function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            profilePhoto.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
+// Save Button Logic (Updated to Firebase functionality)
+saveButton.onclick = async function () {
+    const role = roleInput.value;
+    const name = nameInput.value;
+    const mail = mailInput.value;
+
+    // Create updated user object
+    const updatedUserData = {
+        username: name,
+        password: passwordInput.value,
+        role: role,
+        email: mail,
+        profileImage: profilePhoto.src // Add profile image URL (if needed for Firebase)
+    };
+
+    console.log("Saved Data:", updatedUserData);
+
+    // Fetch existing data, get user key and update the user
+    try {
+        const response = await fetch(firebaseURL);
+        if (!response.ok) throw new Error("Error fetching user data!");
+
+        const userData = await response.json();
+        const userKeys = Object.keys(userData);
+        const userKey = userKeys[0]; // Assuming you're updating the first user
+
+        // Send updated user data to Firebase using PUT method
+        const updateResponse = await fetch(`https://loginandregister-9116b-default-rtdb.firebaseio.com/users/${userKey}.json`, 
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedUserData),
+            }
+        );
+
+        if (!updateResponse.ok) throw new Error("Error updating user data!");
+
+        // Show success message and close modal
+        alert(`Profile updated!\nRole: ${role}\nName: ${name}\nMail: ${mail}`);
+        prof.style.display = 'none';
+        openprofile.src = profilePhoto.src;
+        document.body.style.overflow = 'auto';
+    } catch (error) {
+        console.error("Error updating user data:", error);
+        alert("Failed to update profile.");
+    }
+};
+
+// Fetch user data on page load
+fetchUserData();
+
+// Disable save button initially
+saveButton.disabled = true;
+
+nameInput.addEventListener("input", checkFormValidity);
+passwordInput.addEventListener("input", checkFormValidity);
+});
+    </script>
+    <script>
+            var savedEmail = localStorage.getItem('userEmail');
+
+            document.getElementById("open").innerText=savedEmail
+
+            function method(){
+
+            }
+    </script>
+</body>
+</html>

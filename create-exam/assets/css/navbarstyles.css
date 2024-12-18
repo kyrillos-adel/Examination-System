@@ -1,0 +1,36 @@
+
+:root {
+    --ye: #6495ed;
+    --wh: #faf0e6;
+    --secondColor:#d8ce97;
+    --primaryColor:#162a2c;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+nav{
+    padding-bottom: 15px
+}
+nav ul {
+    background-color: var(--primaryColor);
+    list-style-type: none;
+    margin: 0;
+    padding: 15px;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    color:var(--primaryColor)
+}

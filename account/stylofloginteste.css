@@ -1,0 +1,115 @@
+#bo1 { 
+    background-color: #fefcf6;
+    font-family: Arial, Sans-serif; 
+    /* background-image: url("pexels-jplenio-1103970.jpg"); */
+    
+}
+html, body {
+    overflow: hidden;
+    height: 100%; /* Ensure the content does not extend beyond the viewport */
+}
+#header{
+    color: #162a2c;
+    font-size: 40px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    margin-top: 20px;
+    display: block;
+}
+#for {
+    background-color: #f4efe6;
+    opacity: 0.9;
+    width: 550px;
+    height: 400px;
+    text-align: center;
+    margin-top: 18px;
+    margin-left: 31px;
+    margin-bottom: 100px;
+    position: absolute;
+    border-radius: 20px;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.3); 
+    
+}
+#re {
+    margin-bottom: 50px;
+}
+#fil,#fil2 {
+    border: none;
+}
+#re {
+    padding-top: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+}
+#form2,
+#form3 {
+    margin: 6px;
+    padding: 13px;
+    border-radius: 10px;
+    background-color: #fefcf6;
+    width: 471px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0,0.5);
+    outline: none; 
+    transition: border-color 0.3s; 
+    border: 2px solid #fcfbfb;
+}
+#fil {
+    border: 2px solid #ccc;
+    color: rgb(132, 76, 8);
+    height: 20px;
+    border: none;
+    margin: 20px auto;
+}
+#fil2 label {
+    margin-right: 10px;
+    font-size: 16px;
+    color: #333;
+}
+#fil2 {
+    color: rgb(132, 76, 8);
+}
+.but {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+    margin-top: 75px;
+    padding: 13px;
+    border-radius: 10px;
+    background-color: #162a2c;
+    border: none;
+    box-shadow: 1px;
+    width: 471px;
+    box-shadow: 0px 4px 10px rgb(1 50 80);
+    color: #b3d0dc;
+    transition: 1s ease all;
+}
+.but:hover{
+    transform: scale(1.02);
+    background-color: #fefcf6;
+    color: #333;
+}
+a{
+    color: rgb(81, 81, 81);
+}
+a:hover {
+    color: cadetblue;
+}
+h5 {
+    margin-top: 5px;
+}
+#perant {
+
+    width: 590px;
+    height: 691px;
+    text-align: center;
+    margin-left: 450px;
+    margin-top: 153px;
+    margin-bottom: 100px;
+    position: relative;
+    border-radius: 20px;
+}
+.icon {
+    margin-left: -34px;
+    position: absolute;
+    margin-top: 12px;
+}

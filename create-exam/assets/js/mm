@@ -1,0 +1,64 @@
+{
+    "examTitle": "Final Exam - JavaScript 101",
+    "examDate": "2024-12-14",
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "What does 'JSON' stand for?",
+        "questionType": "multiple-choice",
+        "options": [
+          "JavaScript Object Notation",
+          "JavaScript Online Node",
+          "JavaScript Object Network",
+          "Java Object Notation"
+        ],
+        "correctAnswer": "JavaScript Object Notation"
+      },
+      {
+        "id": 2,
+        "questionText": "Which method is used to parse a JSON string into a JavaScript object?",
+        "questionType": "multiple-choice",
+        "options": [
+          "JSON.parse()",
+          "JSON.stringify()",
+          "JSON.load()",
+          "JSON.parseObject()"
+        ],
+        "correctAnswer": "JSON.parse()"
+      },
+      {
+        "id": 3,
+        "questionText": "True or False: The let keyword is block-scoped in JavaScript.",
+        "questionType": "true-false",
+        "correctAnswer": "True"
+      }
+      ,
+      {
+        "id": 4,
+        "questionText": "Which method is used to parse a JSON string into a JavaScript object?",
+        "questionType": "multiple-choice",
+        "options": [
+          "JSON.parse()",
+          "JSON.stringify()",
+          "JSON.load()",
+          "JSON.parseObject()"
+        ],
+        "correctAnswer": "JSON.parse()"
+      },
+      {
+        "id": 5,
+        "questionText": "True or False: The let keyword is block-scoped in JavaScript.",
+        "questionType": "true-false",
+        "correctAnswer": "True"
+      }
+      
+    ]
+  }
+
+
+
+
+
+
+
+  

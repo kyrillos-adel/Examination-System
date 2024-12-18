@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination Dashboard</title>
+    <!-- <link rel="stylesheet" href="../assets/styles/navbar.css"> -->
+    <link rel="stylesheet" href="../assets/styles/dashboard.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="navbar" style="position: fixed;">
+        <h2 class="logo">Braa<span style="color:#FF7200 ;">&#10004</span>oss</h2>
+        <div class="menu">
+            <ul>
+                <a href="#">
+                    <li>HOME</li>
+                </a>
+                <a href="#">
+                    <li>ABOUT</li>
+                </a>
+                <a href="#">
+                    <li>SERVICE</li>
+                </a>
+                <a href="#">
+                    <li>CONTACT</li>
+                </a>
+            </ul>
+        </div>
+        <!-- exam.html -->
+        <input id="open" type="image" src="../assets/images/picture-profile-icon.jpg"
+            style="float: right;display: flex;right: 80px;position: absolute;">
+        <div id="profile" class="prof">
+            <div class="prof-content">
+                <span class="close">log out</span>
+                <div class="prof-body">
+                    <center>
+                        <div class="photo-edit">
+                            <img id="profilePhoto" src="../assets/images/picture-profile-icon.jpg"
+                                alt="Profile Photo" />
+                            <label for="photoUpload" class="edit-photo-icon">&#9998; Edit</label>
+                            <input type="file" id="photoUpload" accept="image/*" />
+                        </div>
+                    </center>
+                    <div style="width: 90%;">
+
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="nameInput">Name</label>
+                            <input type="text" id="nameInput" value="Rawan Ragab" style="padding-right: 35px;" />
+                            <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="mailInput">Mail</label>
+                            <input style="padding-right: 35px;" type="text" id="mailInput" value="rawan@gmail.com" />
+                        </div>
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="roleInput">Role</label>
+                            <input style="padding-right: 35px;" type="text" id="roleInput" value="Student" disabled />
+                        </div>
+
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="roleInput">Password</label>
+                            <input style="padding-right: 35px;" type="password" id="passwordInput" value="A12345" />
+                            <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="prof-footer">
+                    <button id="saveButton" class="btn save">Save</button>
+                    <button id="cancelButton" class="btn cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="sidebar">
+        <br><br>
+        <h3 style="padding: 20px;">User Role: Student</h3>
+        <a id="upexams" href="#">Upcoming Exams</a>
+        <a id="pastResults" href="#">Past Results</a>
+        <!-- <a href="#">Study Materials</a> -->
+        <a href="#" onclick="showFeedback()">Feedback</a>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <div class="container" id="defaultContent">
+            <header>
+                <h1 style="margin-top: 30px;">Welcome to Your Exam Portal</h1>
+            </header>
+
+            <section class="welcome-message">
+                <h2>Welcome, <span id="studentName">Student</span>!</h2>
+                <p>Your registration is complete. You can access your upcoming exam</p>
+            </section>
+
+            <img src="../assets/images/pic12.png" width="500px">
+        </div>
+    </div>
+
+    <div class="feedback-container" style="display: none;margin-left: 400px;" id="feedbackContainer">
+        <h1>We Value Your Feedback!</h1>
+        <form id="feedbackForm">
+            <label for="feedbackText">Please provide your feedback:</label>
+            <textarea id="feedbackText" name="feedbackText" rows="5" cols="50" placeholder="Enter your feedback here..."
+                style="width: 80%; display:flex"></textarea>
+            <br>
+            <button type="button" id="submitFeedbackButton" class="submit-button">Submit Feedback</button>
+        </form>
+        <div id="feedbackMessage"></div>
+    </div>
+
+
+    <script>
+        let upcomingExamsSelected = false;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://examination-website-default-rtdb.firebaseio.com/Exam.json");
+        xhr.send();
+        let examsRetrieved;
+
+        xhr.addEventListener('readystatechange', () => {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                examsRetrieved = JSON.parse(xhr.responseText);
+                console.log(examsRetrieved);
+            }
+        });
+
+        document.getElementById("upexams").addEventListener('click', () => {
+            var feedbackContainer = document.getElementById('feedbackContainer')
+            feedbackContainer.style.display = "none";
+            let mainContent = document.getElementById('main-content');
+
+            mainContent.innerHTML = `<div class="container"></div>`;
+
+            for (let userId in examsRetrieved) {
+                let user = examsRetrieved[userId];
+                let examName = user.ExamName;
+                let duaration = user.ExamDuration;
+                console.log(user);
+                let container = document.querySelector('.container');
+                var examDiv = `<div class="div"><div class="divin"><p>${examName}</p><br><br><p style="color: #162a2c;">${duaration + ' Minutes'}</p><button class="butOFexam" value="${examName}">START</button></div></div>`;
+                container.innerHTML += examDiv;
+            }
+            // document.getElementById()
+
+            let startButtons = document.querySelectorAll('.butOFexam');
+            for (const but of startButtons) {
+                but.addEventListener('click', () => {
+                    window.open(`../../exams/exam.html?message=${but.value}`);
+                });
+            }
+        });
+
+
+        document.getElementById("pastResults").addEventListener('click', async () => {
+    var feedbackContainer = document.getElementById('feedbackContainer');
+    feedbackContainer.style.display = "none";
+    let mainContent = document.getElementById('main-content');
+
+    // Fetch data from Firebase
+    try {
+        const response = await fetch('https://examination-25129-default-rtdb.firebaseio.com/users.json');
+        if (!response.ok) throw new Error("Error fetching data from Firebase!");
+
+        const userData = await response.json();
+
+        // Generate table rows dynamically
+        let tableRows = "";
+        for (let userKey in userData) {
+            if (userData.hasOwnProperty(userKey)) {
+                const user = userData[userKey];
+                tableRows += `
+                  <tr>
+                    <th scope="row">${user.title || "Unknown Exam"}</th>
+                    <td>${user.score !== undefined ? `${user.score} / ${user.total}` : "No Score"}</td>
+                  </tr>
+                `;
+            }
+        }
+
+        // Update the main content dynamically 
+        mainContent.innerHTML = `
+            <div class="container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Exam Name</th>
+                            <th scope="col">Exam Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            </div>`;
+    } catch (error) {
+        console.error("Error loading exam results:", error);
+        alert("Failed to load past results.");
+    }
+
+
+            // for (let userId in examsRetrieved) {
+            //     let user = examsRetrieved[userId];
+            //     let examName = user.ExamName;
+            //     let duaration = user.ExamDuration;
+            //     console.log(user);
+            //     let container = document.querySelector('.container');
+            //     var examDiv = `<div class="div"><div class="divin"><p>${examName}</p><br><br><p style="color: #162a2c;">${duaration + ' Minutes'}</p><button class="butOFexam" value="${examName}">START</button></div></div>`;
+            //     container.innerHTML += examDiv;
+            // }
+            // // document.getElementById()
+
+            // let startButtons = document.querySelectorAll('.butOFexam');
+            // for (const but of startButtons) {
+            //     but.addEventListener('click', () => {
+            //         window.open(`../../exams/exam.html?message=${but.value}`);
+            //     });
+            // }
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const prof = document.getElementById('profile');
+            const openprofile = document.getElementById('open');
+            const closeprof = document.querySelector('.close');
+            const saveButton = document.getElementById('saveButton');
+            const cancelButton = document.getElementById('cancelButton');
+            const nameInput = document.getElementById('nameInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const roleInput = document.getElementById('roleInput');
+            const mailInput = document.getElementById('mailInput');
+            const profilePhoto = document.getElementById('profilePhoto');
+            const photoUpload = document.getElementById('photoUpload');
+            const firebaseURL = "https://loginandregister-9116b-default-rtdb.firebaseio.com/users.json";
+
+            async function fetchUserData() {
+                try {
+                    const response = await fetch(firebaseURL);
+                    if (!response.ok) throw new Error("Error fetching user data!");
+
+                    const userData = await response.json();
+                    var user;
+                    // Assuming you're fetching the first user's data for simplicity
+                    const userKeys = Object.keys(userData);
+                    for (const key in userData) {
+                        if (userData.hasOwnProperty(key)) {
+                            const element = userData[key];
+                            console.log(element)
+                            var savedEmail = localStorage.getItem('userEmail');
+                            if (element.email == savedEmail) {
+                                user = element;
+                                break;
+                            }
+
+                        }
+                    }
+
+
+                    // Populate the profile fields
+                    nameInput.value = user.username || "Unknown";
+                    passwordInput.value = user.password || "";
+                    roleInput.value = user.role || "Not defined";
+                    mailInput.value = user.email || "";
+
+                    console.log("User Data Loaded:", user);
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                    alert("Failed to fetch user data.");
+                }
+            }
+
+            function validateInput(input, regex) {
+                if (!regex.test(input.value)) {
+                    input.style.border = "2px solid red";
+                    return false;
+                } else {
+                    input.style.border = "2px solid green";
+                    return true;
+                }
+            }
+
+            function checkFormValidity() {
+                const RGXname = /^[a-zA-Z\s]{3,30}$/;
+                const RGXpass = /^(?=.*[A-Z][0-9]{4,8}).+$/;
+
+                const isNameValid = validateInput(nameInput, RGXname);
+                const isPasswordValid = validateInput(passwordInput, RGXpass);
+                saveButton.disabled = !(isNameValid && isPasswordValid);
+            }
+
+            // Show Profile Modal
+            openprofile.onclick = function () {
+                prof.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            };
+
+
+
+            function logout() {
+                sessionStorage.clear();
+                localStorage.clear();
+
+                window.location.replace(`Home.html`, "_self");
+            }
+
+            closeprof.onclick = function () {
+                prof.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                logout();
+            };
+
+            cancelButton.onclick = function () {
+                prof.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+
+
+            window.onclick = function (event) {
+                if (event.target === prof) {
+                    prof.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            };
+
+            // Photo Upload Handler
+            photoUpload.onchange = function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        profilePhoto.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            // Save Button Logic (Updated to Firebase functionality)
+            saveButton.onclick = async function () {
+                const role = roleInput.value;
+                const name = nameInput.value;
+                const mail = mailInput.value;
+
+                // Create updated user object
+                const updatedUserData = {
+                    username: name,
+                    password: passwordInput.value,
+                    role: role,
+                    email: mail,
+                    profileImage: profilePhoto.src // Add profile image URL (if needed for Firebase)
+                };
+
+                console.log("Saved Data:", updatedUserData);
+
+                // Fetch existing data, get user key and update the user
+                try {
+                    const response = await fetch(firebaseURL);
+                    if (!response.ok) throw new Error("Error fetching user data!");
+
+                    const userData = await response.json();
+                    const userKeys = Object.keys(userData);
+                    const userKey = userKeys[0]; // Assuming you're updating the first user
+
+                    // Send updated user data to Firebase using PUT method
+                    const updateResponse = await fetch(`https://loginandregister-9116b-default-rtdb.firebaseio.com/users/${userKey}.json`,
+                        {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(updatedUserData),
+                        }
+                    );
+
+                    if (!updateResponse.ok) throw new Error("Error updating user data!");
+
+                    // Show success message and close modal
+                    alert(`Profile updated!\nRole: ${role}\nName: ${name}\nMail: ${mail}`);
+                    prof.style.display = 'none';
+                    openprofile.src = profilePhoto.src;
+                    document.body.style.overflow = 'auto';
+                } catch (error) {
+                    console.error("Error updating user data:", error);
+                    alert("Failed to update profile.");
+                }
+            };
+
+            // Fetch user data on page load
+            fetchUserData();
+
+            // Disable save button initially
+            saveButton.disabled = true;
+
+            nameInput.addEventListener("input", checkFormValidity);
+            passwordInput.addEventListener("input", checkFormValidity);
+        });
+    </script>
+
+
+    <script>
+        // Get the submit button and the textarea
+        const submitFeedbackButton = document.getElementById('submitFeedbackButton');
+        const feedbackText = document.getElementById('feedbackText');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        var feedbackContainer = document.getElementById('feedbackContainer')
+        var mainContent = document.getElementById('main-content')
+        function showFeedback() {
+            console.log("xejnxksk")
+            feedbackContainer.style.display = "block";
+            mainContent.innerHTML = ''
+            const feedback = feedbackText.value.trim(); // Get the feedback value
+
+            // Check if the feedback is empty
+            if (feedback === "") {
+                // feedbackMessage.textContent = "Feedback cannot be empty! Please enter your comments.";
+                // feedbackMessage.style.color = "red"; // Set message color to red for error
+            } else {
+                feedbackMessage.textContent = "Thank you for your feedback!";
+                feedbackMessage.style.color = "green";
+
+                feedbackText.value = "";
+            }
+        }
+    </script>
+</body>
+
+</html>

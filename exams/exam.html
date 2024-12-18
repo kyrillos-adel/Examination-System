@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="exam.css">
+
+    <title>Student Exam</title>
+   
+
+</head>
+
+<body>
+    <div class="navbar">
+        <h2 class="logo">Braa<span style="color: #FF7200 ;">&#10004</span>oss</h2>
+        <div class="menu">
+            <ul>
+                <a href="#">
+                    <li>HOME</li>
+                </a>
+                <a href="#">
+                    <li>ABOUT</li>
+                </a>
+                <a href="#">
+                    <li>SERVICE</li>
+                </a>
+                <a href="#">
+                    <li>CONTACT</li>
+                </a>
+            </ul>
+        </div>
+        <!-- exam.html -->
+        <input id="open" type="image" src="picture-profile-icon.jpg">
+        <div id="profile" class="prof">
+            <div class="prof-content">
+                <span class="close" >log out</span>
+                <div class="prof-body">
+                    <center>
+                        <div class="photo-edit">
+                            <img id="profilePhoto" src="picture-profile-icon.jpg" alt="Profile Photo" />
+                            <label for="photoUpload" class="edit-photo-icon">&#9998; Edit</label>
+                            <input type="file" id="photoUpload" accept="image/*" />
+                        </div>
+                    </center>
+                    <div>
+
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="nameInput">Name</label>
+                            <input type="text" id="nameInput" value="Rawan Ragab" style="padding-right: 35px;" />
+                            <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="mailInput">Mail</label>
+                            <input style="padding-right: 35px;" type="text" id="mailInput" value="rawan@gmail.com" />
+                        </div>
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="roleInput">Role</label>
+                            <input style="padding-right: 35px;" type="text" id="roleInput" value="Student" disabled />
+                        </div>
+
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="roleInput">Password</label>
+                            <input style="padding-right: 35px;" type="password" id="passwordInput" value="A12345"/>
+                            <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="prof-footer">
+                    <button id="saveButton" class="btn save">Save</button>
+                    <button id="cancelButton" class="btn cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="exam-container">
+        <div class="exam-title"></div>
+        <div class="exam-date"></div>
+        <div class="exam"></div>
+    </div>
+
+   
+    <div class="popup-overlay" id="popupOverlay" style="display: none"></div>
+        <div class="popup-outer">
+        <div class="popup" id="popup">
+      <!-- <div> -->
+      <i class="fa-solid fa-check"></i>
+      <!-- </div> -->
+      <p id="scoreMessage">Your score is : </p> <br>
+      <p>Your exam has been saved succesfully.</p><br>
+      <button type="button" onclick="ClosePopup(); ">go to home</button>
+    </div>
+  </div>
+</div>
+
+    <script src="exam.js">
+    </script>
+</body>
+
+</html>

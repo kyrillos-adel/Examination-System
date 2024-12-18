@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Profile prof</title>
+    <style>
+/* body {
+    background-image: url('backgound.jpeg');
+    background-size: cover;
+    
+}
+
+#open {
+
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+
+} */
+.prof {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+
+.prof-content {
+    background-color: #faf7ec;
+    margin: 3% auto;
+    padding: 40px;
+    border-radius: 8px;
+    width: 37%;
+    position: relative;
+}
+.photo-edit {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+#profilePhoto {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    text-align: center;
+
+}
+
+.edit-photo-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color:rgb(38, 85, 105);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.edit-photo-icon:hover {
+    background-color:rgb(1, 50, 80);
+}
+
+#photoUpload {
+    display: none;
+}
+
+.label {
+    font-weight: bold;
+}
+
+#nameInput , #mailInput , #roleInput , #passwordInput {
+    display: block;
+    background-color:  azure;
+    margin: 5px -5px 15px;
+    width: 95%;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px;
+    border-radius: 4px;
+}
+
+.prof-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn.save {
+    background-color: rgb(38, 85, 105);
+    color: white;
+}
+
+.btn.cancel {
+    background-color: bisque;
+    color: rgb(38, 85, 105);
+}
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 18px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+
+}
+.close:hover
+{
+    background-color:rgb(38, 85, 105) ;
+}
+#editt
+{
+    margin-left: 95%;
+}
+.edit-icon {
+    position: absolute;
+    right: 10px; 
+    top: 60%; 
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: rgb(1, 50, 80);
+    cursor: pointer; 
+    transition: color 0.3s ease; 
+}
+
+.edit-icon:hover {
+    color: black;
+}
+
+
+    </style>
+   
+</head>
+<body>
+
+        <!-- <button id="openprofile">Profile</button> -->
+        <input id="open" type="image" src="picture-profile-icon.jpg">
+        <div id="profile" class="prof">
+            <div class="prof-content">
+                <span class="close">x</span>
+                <div class="prof-body">
+                   <center> 
+                    <div class="photo-edit">
+                        <img id="profilePhoto" src="picture-profile-icon.jpg" alt="Profile Photo" />
+                        <label for="photoUpload" class="edit-photo-icon">&#9998; Edit</label>
+                        <input type="file" id="photoUpload" accept="image/*" />
+                    </div>
+                  </center>
+                    <div class="about-me">
+                        <h3>About Me</h3>
+                        <p>Solutionist, pro-consumer, pro-competition, pro-innovation, anti-monopoly/oligopoly, and anti-regulation.</p>
+                    </div>
+                    <div>
+                       
+                        <div style="position: relative; width: 100%;">
+                        <label class="label" for="nameInput">Name</label>
+                        <input type="text" id="nameInput" value="Rawan Ragab" style="padding-right: 35px;" />
+                        <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+                        <div style="position: relative; width: 100%;">
+                        <label class="label" for="mailInput">Mail</label>
+                        <input style="padding-right: 35px;" type="text" id="mailInput" value="rawan@gmail.com"/>
+                        <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+                        <div style="position: relative; width: 100%;">
+                        <label class="label" for="roleInput">Role</label>
+                        <input style="padding-right: 35px;" type="text" id="roleInput" value="Student" readonly/>
+                        <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="roleInput">Password</label>
+                            <input style="padding-right: 35px;" type="password" id="passwordInput" value="12345" readonly/>
+                            <i class="fa fa-edit edit-icon" title="Edit"></i>
+                            </div>
+                        
+                    </div>
+                </div>
+                <div class="prof-footer">
+                    <button id="saveButton" class="btn save">Save</button>
+                    <button id="cancelButton" class="btn cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    
+    <script >
+    document.addEventListener("DOMContentLoaded", function () {
+    const prof = document.getElementById('profile')
+    const openprofile = document.getElementById('open')
+    const closeprof = document.querySelector('.close')
+    const saveButton = document.getElementById('saveButton')
+    const cancelButton = document.getElementById('cancelButton')
+
+    // Open prof
+    openprofile.onclick = function() {
+    prof.style.display = 'block'
+}
+
+    // Close prof
+    closeprof.onclick = function() {
+        prof.style.display = 'none'
+    }
+
+    cancelButton.onclick = function () {
+        prof.style.display = 'none'
+    }
+
+    // Click outside the prof to close it
+    window.onclick = function(event) {
+    if (event.target === prof) {
+        prof.style.display = 'none'
+    }};
+const iconphoto= document.getElementById('open')
+const photoUpload = document.getElementById('photoUpload')
+const profilePhoto = document.getElementById('profilePhoto')
+
+photoUpload.onchange = function (event) {
+    const file = event.target.files[0]
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = function (e) {
+            profilePhoto.src = e.target.result
+        }
+         reader.readAsDataURL(file)
+
+    }}
+    
+
+    saveButton.onclick = function(){
+        const role = document.getElementById('roleInput').value
+        const name = document.getElementById('nameInput').value
+        const mail = document.getElementById('mailInput').value
+        console.log("Saved Data:", { role, name, mail})
+        // alert(`Profile updated!\nrole: ${role}\nname: ${name} \nmail: ${mail}`)
+        prof.style.display = 'none'
+        iconphoto.src=profilePhoto.src
+
+
+    }
+})
+
+    </script>
+
+ 
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination Dashboard</title>
+    <link rel="stylesheet" href="../assets/styles/dashboard.css">
+    <link rel="stylesheet" href="../../create-exam/assets/css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../assets/styles/welcome.css"> -->
+
+</head>
+
+<body>
+    <div class="navbar" style="position: fixed;;">
+        <h2 class="logo">Braa<span style="color: #FF7200 ;">&#10004</span>oss</h2>
+        <div class="menu">
+            <ul>
+                <a href="#">
+                    <li>HOME</li>
+                </a>
+                <a href="#">
+                    <li>ABOUT</li>
+                </a>
+                <a href="#">
+                    <li>SERVICE</li>
+                </a>
+                <a href="#">
+                    <li>CONTACT</li>
+                </a>
+            </ul>
+        </div>
+        <!-- exam.html -->
+        <input id="open" type="image" src="../assets/images/picture-profile-icon.jpg"
+            style="float: right;display: flex;right: 80px;position: absolute;">
+        <div id="profile" class="prof">
+            <div class="prof-content">
+                <span class="close">log out</span>
+                <div class="prof-body">
+                    <center>
+                        <div class="photo-edit">
+                            <img id="profilePhoto" src="../assets/images/picture-profile-icon.jpg"
+                                alt="Profile Photo" />
+                            <label for="photoUpload" class="edit-photo-icon">&#9998; Edit</label>
+                            <input type="file" id="photoUpload" accept="image/*" />
+                        </div>
+                    </center>
+                    <div>
+
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="nameInput">Name</label>
+                            <input type="text" id="nameInput" value="Rawan Ragab" />
+                            <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="mailInput">Mail</label>
+                            <input type="text" id="mailInput" value="rawan@gmail.com" />
+                        </div>
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="roleInput">Role</label>
+                            <input type="text" id="roleInput" value="Student" disabled />
+                        </div>
+
+                        <div style="position: relative; width: 100%;">
+                            <label class="label" for="roleInput">Password</label>
+                            <input type="password" id="passwordInput" value="A12345" />
+                            <i class="fa fa-edit edit-icon" title="Edit"></i>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="prof-footer">
+                    <button id="saveButton" class="btn save">Save</button>
+                    <button id="cancelButton" class="btn cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="sidebar">
+        <br><br>
+        <h3 style="padding: 20px;color: white;">User Role: Teacher</h3>
+        <a id="createExam" href="#">Create Exam</a>
+        <a id="exams" href="#">Past Exams</a>
+        <a href="#" onclick="showFeedback()">Feedback</a>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <div class="container" id="mainView">
+            <header>
+                <h1 style="margin-top: 80px;">Welcome to Exam Portal</h1>
+            </header>
+            <br>
+            <img src="../assets/images/pic22.png">
+        </div>
+
+
+
+        <div id="crEx" style="display: none;">
+            <h1>Create Exam</h1>
+            <div class="card">
+                <h3>Exam Details:</h3>
+                <div style="position: relative">
+                    <form id="examDetailsForm">
+                        <input type="text" id="examName" name="examName" placeholder="Exam Name" />
+                        <p>Exam Date:</p>
+                        <div class="exam-date">
+                            <input type="date" id="examDate" name="examDate" placeholder="Exam Date" />
+                            <input type="time" id="examTime" name="examTime" placeholder="Exam Time" />
+                        </div>
+                        <input type="number" id="examDuration" name="examDuration"
+                            placeholder="Exam Duration (minutes)" />
+                        <p id="durationValidationMessage" style="color: red; display: none;font-size: 20px;">Exam
+                            Duration must be a number greater than 1!</p>
+                        <button type="button" id="saveQuestionDetails">Save</button>
+                    </form>
+                    <p id="validationMessage" style="color: red; display: none;font-size: 20px;">All fields are
+                        required!</p>
+
+                </div>
+            </div>
+
+
+            <div id="questionCreateContainer" class="card"
+                style="visibility: hidden; position: relative; display: none">
+                <!-- Close Icon for the card -->
+                <div style="cursor: pointer; font-size: 24px" onclick="closeCard(event)">
+                    &times;
+                </div>
+                <br />
+                <br />
+                <div style="position: relative">
+                    <form id="questionCreateForm">
+                        <input type="hidden" id="questionId" name="questionId" value="0" required />
+                        <textarea placeholder="Write the question" id="question" style="height: 90px"></textarea>
+                        <div id="choicesView" style="display: grid; gap: 10px"></div>
+
+                        <div class="choice-wrapper" id="ChoiceCreate">
+                            <input type="text" placeholder="Write choice" id="choiceContent" required />
+                            <button onclick="saveChoicee(event);" type="button" id="saveChoice">
+                                Save choice
+                            </button>
+                        </div>
+
+                        <button type="button" class="new-button" id="saveQuestion" onclick="saveQuestionn(event)">
+                            Save question
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+            <div id="addAnotherQuestion" class="card" style="visibility: hidden">
+                <button type="button" class="new-button" id="anotherquestionButton">
+                    Add another question
+                </button>
+            </div>
+
+            <div id="SaveExam" class="card" style="visibility: hidden">
+                <button type="button" class="new-button" id="saveExamButton" onclick="saveExam()">
+                    save Exam
+                </button>
+            </div>
+
+            <!-- ///////////////////////// -->
+            <div class="popup-overlay" id="popupOverlay" style="display: none"></div>
+
+            <div class="popup-outer">
+                <div class="popup" id="popup">
+                    <!-- <div> -->
+                    <i class="fa-solid fa-check"></i>
+                    <!-- </div> -->
+                    <h3>Thank You</h3>
+                    <p>Your exam has been saved succesfully.</p>
+                    <button type="button" onclick="ClosePopup()">Go To Home</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- /////////////////////////////////////////// -->
+
+<div class="feedback-container" style="display: none;margin-left: 400px; margin-right: 50px; " id="feedbackContainer">
+    <h1>We Value Your Feedback!</h1>
+    <form id="feedbackForm">
+      <label for="feedbackText">Please provide your feedback:</label>
+      <textarea id="feedbackText" name="feedbackText" rows="5" cols="50" placeholder="Enter your feedback here..."></textarea>
+      <br>
+      <button type="button" id="submitFeedbackButton" class="submit-button">Submit Feedback</button>
+    </form>
+    <div id="feedbackMessage"></div>
+</div>
+<!-- //////////////////////////////////// -->
+    <script>
+        document.getElementById("createExam").addEventListener('click', () => {
+            let mainView = document.getElementById('mainView');
+            let crEx = document.getElementById('crEx');
+            console.log(crEx);
+
+            mainView.style.display = 'none';
+            crEx.style.display = 'block';
+        });
+    </script>
+    <script src="../../create-exam/assets/js/script.js">
+
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const prof = document.getElementById('profile');
+            const openprofile = document.getElementById('open');
+            const closeprof = document.querySelector('.close');
+            const saveButton = document.getElementById('saveButton');
+            const cancelButton = document.getElementById('cancelButton');
+            const nameInput = document.getElementById('nameInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const roleInput = document.getElementById('roleInput');
+            const mailInput = document.getElementById('mailInput');
+            const profilePhoto = document.getElementById('profilePhoto');
+            const photoUpload = document.getElementById('photoUpload');
+            const firebaseURL = "https://loginandregister-9116b-default-rtdb.firebaseio.com/users.json";
+
+            async function fetchUserData() {
+                try {
+                    const response = await fetch(firebaseURL);
+                    if (!response.ok) throw new Error("Error fetching user data!");
+
+                    const userData = await response.json();
+                    var user;
+                    // Assuming you're fetching the first user's data for simplicity
+                    const userKeys = Object.keys(userData);
+                    for (const key in userData) {
+                        if (userData.hasOwnProperty(key)) {
+                            const element = userData[key];
+                            console.log(element)
+                            var savedEmail = localStorage.getItem('userEmail');
+                            if (element.email == savedEmail) {
+                                user = element;
+                                break;
+                            }
+
+                        }
+                    }
+
+
+                    // Populate the profile fields
+                    nameInput.value = user.username || "Unknown";
+                    passwordInput.value = user.password || "";
+                    roleInput.value = user.role || "Not defined";
+                    mailInput.value = user.email || "";
+
+                    console.log("User Data Loaded:", user);
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                    alert("Failed to fetch user data.");
+                }
+            }
+
+            function validateInput(input, regex) {
+                if (!regex.test(input.value)) {
+                    input.style.border = "2px solid red";
+                    return false;
+                } else {
+                    input.style.border = "2px solid green";
+                    return true;
+                }
+            }
+
+            function checkFormValidity() {
+                const RGXname = /^[a-zA-Z\s]{3,30}$/;
+                const RGXpass = /^(?=.*[A-Z][0-9]{4,8}).+$/;
+
+                const isNameValid = validateInput(nameInput, RGXname);
+                const isPasswordValid = validateInput(passwordInput, RGXpass);
+                saveButton.disabled = !(isNameValid && isPasswordValid);
+            }
+
+            // Show Profile Modal
+            openprofile.onclick = function () {
+                prof.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            };
+
+
+            function logout() {
+        sessionStorage.clear();
+        localStorage.clear();
+    
+        window.location.replace(`Home.html`,"_self");
+    }
+
+            closeprof.onclick = function () {
+                prof.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                logout()
+            };
+
+            cancelButton.onclick = function () {
+                prof.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+
+            window.onclick = function (event) {
+                if (event.target === prof) {
+                    prof.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            };
+
+            // Photo Upload Handler
+            photoUpload.onchange = function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        profilePhoto.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            // Save Button Logic (Updated to Firebase functionality)
+            saveButton.onclick = async function () {
+                const role = roleInput.value;
+                const name = nameInput.value;
+                const mail = mailInput.value;
+
+                // Create updated user object
+                const updatedUserData = {
+                    username: name,
+                    password: passwordInput.value,
+                    role: role,
+                    email: mail,
+                    profileImage: profilePhoto.src // Add profile image URL (if needed for Firebase)
+                };
+
+                console.log("Saved Data:", updatedUserData);
+
+                // Fetch existing data, get user key and update the user
+                try {
+                    const response = await fetch(firebaseURL);
+                    if (!response.ok) throw new Error("Error fetching user data!");
+
+                    const userData = await response.json();
+                    const userKeys = Object.keys(userData);
+                    const userKey = userKeys[0]; // Assuming you're updating the first user
+
+                    // Send updated user data to Firebase using PUT method
+                    const updateResponse = await fetch(`https://loginandregister-9116b-default-rtdb.firebaseio.com/users/${userKey}.json`,
+                        {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(updatedUserData),
+                        }
+                    );
+
+                    if (!updateResponse.ok) throw new Error("Error updating user data!");
+
+                    // Show success message and close modal
+                    // alert(`Profile updated!\nRole: ${role}\nName: ${name}\nMail: ${mail}`);
+                    prof.style.display = 'none';
+                    openprofile.src = profilePhoto.src;
+                    document.body.style.overflow = 'auto';
+                } catch (error) {
+                    console.error("Error updating user data:", error);
+                    alert("Failed to update profile.");
+                }
+
+                
+            };
+
+            // Fetch user data on page load
+            fetchUserData();
+
+            // Disable save button initially
+            saveButton.disabled = true;
+
+            nameInput.addEventListener("input", checkFormValidity);
+            passwordInput.addEventListener("input", checkFormValidity);
+        });
+    </script>
+    <script>
+        // Get the submit button and the textarea
+        const submitFeedbackButton = document.getElementById('submitFeedbackButton');
+        const feedbackText = document.getElementById('feedbackText');
+        // const feedbackMessage = document.getElementById('feedbackMessage');
+        var feedbackContainer = document.getElementById('feedbackContainer')
+        var mainContent = document.getElementById('main-content')
+        function showFeedback() {
+            console.log("xejnxksk")
+            feedbackContainer.style.display = "block";
+            
+            document.getElementById("crEx").style.display="none"
+            document.getElementById("mainView").style.display="none"
+            const feedback = feedbackText.value.trim(); // Get the feedback value
+
+            // Check if the feedback is empty
+            if (feedback === "") {
+                // feedbackMessage.textContent = "Feedback cannot be empty! Please enter your comments.";
+                // feedbackMessage.style.color = "red"; // Set message color to red for error
+            } else {
+                // feedbackMessage.textContent = "Thank you for your feedback!";
+                // feedbackMessage.style.color = "green"; 
+
+                feedbackText.value = "";
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

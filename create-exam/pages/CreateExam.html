@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examination Website - Home</title>
+  <link rel="stylesheet" href="../assets/css/navbarstyles.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <li><a href="../pages/index.html">Home</a></li>
+      <li><a href="../pages/about.html">About</a></li>
+      <li><a href="../pages/contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <h1>Create Exam</h1>
+  <div class="card">
+    <h3>Exam Details:</h3>
+    <div style="position: relative">
+      <form id="examDetailsForm">
+        <input type="text" id="examName" name="examName" placeholder="Exam Name"/>
+        <p>Exam Date:</p>
+        <div class="exam-date">
+          <input type="date" id="examDate" name="examDate" placeholder="Exam Date" />
+          <input type="time" id="examTime" name="examTime" placeholder="Exam Time" />
+        </div>
+        <input type="text" id="examDuration" name="examDuration" placeholder="Exam Duration (minutes)" />
+        <button type="button" id="saveQuestionDetails">Save</button>
+      </form>
+      <p id="validationMessage" style="color: red; display: none;">All fields are required!</p>
+      <p id="durationValidationMessage" style="color: red; display: none;">Exam Duration must be a number greater than 1!</p>
+
+    </div>
+  </div>
+
+  <div id="questionCreateContainer" class="card" style="visibility: hidden; position: relative; display: none">
+    <!-- Close Icon for the card -->
+    <div style="cursor: pointer; font-size: 24px" onclick="closeCard(event)">
+      &times;
+    </div>
+    <br />
+    <br />
+    <div style="position: relative">
+      <form id="questionCreateForm">
+        <input type="hidden" id="questionId" name="questionId" value="0" required />
+        <textarea placeholder="Write the question" id="question" style="height: 90px"></textarea>
+        <div id="choicesView" style="display: grid; gap: 10px"></div>
+
+        <div class="choice-wrapper" id="ChoiceCreate">
+          <input type="text" placeholder="Write choice" id="choiceContent" required/>
+          <button onclick="saveChoicee(event);" type="button" id="saveChoice">
+            Save choice
+          </button>
+        </div>
+
+        <button type="button" class="new-button" id="saveQuestion" onclick="saveQuestionn(event)">
+          Save question
+        </button>
+      </form>
+
+    </div>
+  </div>
+  
+  <div id="addAnotherQuestion" class="card" style="visibility: hidden">
+    <button type="button" class="new-button" id="anotherquestionButton">
+      Add another question
+    </button>
+  </div>
+
+  <div id="SaveExam" class="card" style="visibility: hidden">
+    <button type="button" class="new-button" id="saveExamButton" onclick="saveExam()">
+      save Exam
+    </button>
+  </div>
+
+  <!-- ///////////////////////// -->
+  <div class="popup-overlay" id="popupOverlay" style="display: none"></div>
+
+  <div class="popup-outer">
+    <div class="popup" id="popup">
+      <!-- <div> -->
+      <i class="fa-solid fa-check"></i>
+      <!-- </div> -->
+      <h3>Thank You</h3>
+      <p>Your exam has been saved succesfully.</p>
+      <button type="button" onclick="ClosePopup()">Go To Home</button>
+    </div>
+  </div>
+
+  <!-- /////// -->
+
+  <script src="../assets/js/script.js"></script>
+</body>
+
+</html>
